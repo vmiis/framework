@@ -438,3 +438,20 @@ $vm.show_module_v2=function(id,slot,op){
 }
 //-----------------------------------
 */
+$vm.load_module_content=function(url,callback){ //used for iframe
+	var ver=localStorage.getItem(url+"_ver");
+	var txt=localStorage.getItem(url+"_txt");
+	//------------------------------------------
+	if(ver!=$vm.version || txt===null || $vm.debug===true || $vm.reload!=''){
+		console.log('loading '+url+'?_='+$vm.version+$vm.reload);
+		$.get(url+'?_='+$vm.version+$vm.reload,function(data){
+			localStorage.setItem(url+"_txt",data);
+			localStorage.setItem(url+"_ver",$vm.version);
+			if(callback!=undefined) callback(data);
+		},'text').fail(function() {
+			alert( "The module content file ("+url+") doesn't exist!" );
+		});
+	}
+	else{ if(callback!=undefined) callback(data); }
+	//------------------------------------------
+}

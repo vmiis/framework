@@ -192,3 +192,37 @@ $vm.get_parameter=function(name, url){
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+//--------------------------------------------------------
+$vm.load_config_and_init=function(path){
+	var url=$vm.hosting_path+path;
+	var ver=localStorage.getItem(url+"_ver");
+	var txt=localStorage.getItem(url+"_txt");
+	//------------------------------------------
+	if(ver!=$vm.version || txt===null || $vm.debug===true || $vm.reload!=''){
+		console.log('loading '+url+'?_='+$vm.version+$vm.reload);
+		$.get(url+'?_='+$vm.version+$vm.reload,function(data){
+			localStorage.setItem(url+"_txt",data);
+			localStorage.setItem(url+"_ver",$vm.version);
+			$vm._panel_init(data);;
+		},'text').fail(function() {
+			alert( "The configuration file ("+url+") doesn't exist!" );
+		});
+	}
+	else{ $vm._panel_init(txt); }
+	//------------------------------------------
+}
+//--------------------------------------------------------
+$vm._panel_init=function(txt){
+	var text=$('<div/>').html(txt).text();
+	//---------------------------
+	var config;
+	try{ config=JSON.parse(text);}
+	catch (e){ alert("Error in app config file\n"+e); return; }
+	//--------------------------------------------------------
+	group=config.group;
+	var modules=config.modules;
+	for (var property in modules) {
+		if($vm.module_list[property]==undefined) $vm.module_list[group+'_'+property]=modules[property];
+	}
+}
+//--------------------------------------------------------
