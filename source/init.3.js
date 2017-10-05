@@ -5,6 +5,9 @@ $vm.init_v3=function(options){
 	$vm.edge=0;
 	if(navigator.appVersion.indexOf('Edge')!=-1) $vm.edge=1;
 	$vm.user="guest";
+	$vm.hash_index=0;
+	location.hash=$vm.hash_index;
+	$vm.last_hash='#0';
 	$VmAPI.request({data:{cmd:'user_name',ip:$vm.ip},callback:function(res){
 		if(res.user!==undefined){
 			$vm.user=res.user;
