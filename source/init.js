@@ -224,7 +224,7 @@ $vm._panel_init=function(txt,callback){
 	else group=group+"_";
 	var modules=config.modules;
 	for (var property in modules) {
-		if($vm.module_list[property]==undefined) $vm.module_list[group+property]=modules[property];
+		if($vm.module_list[group+property]==undefined) $vm.module_list[group+property]=modules[property];
 	}
 	if(callback!=undefined) callback(config);
 }

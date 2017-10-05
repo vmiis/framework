@@ -67,3 +67,17 @@ $vm.source=function(pid,event){
 	}
 }
 //------------------------------------------------------------------
+$vm.url_source=function(url){
+	$.get(url+'?'+new Date().getTime(), function(data){
+		var c_url='__PARTS__/code_viewer/code.html'
+		var param={
+			name:"code_viewer",
+			pid:$vm.id(url+"--------"),
+			slot:$vm.root_layout_content_slot,
+			url:$vm.url(c_url),
+			op:{name:url,code:data}
+		}
+		$vm.load_module(param);
+	})
+}
+//------------------------------------------------------------------
