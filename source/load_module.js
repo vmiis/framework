@@ -482,6 +482,6 @@ $vm.load_module_content=function(url,callback){ //used for iframe
 			alert( "The module content file ("+url+") doesn't exist!" );
 		});
 	}
-	else{ if(callback!=undefined) callback(data); }
+	else{ if(callback!=undefined) callback(txt); }
 	//------------------------------------------
 }
