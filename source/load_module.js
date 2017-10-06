@@ -151,8 +151,9 @@ $vm.insert_module=function(options){
 	var slot	=options.slot;
 	if(pid===undefined) return;
 	if(slot===undefined || slot=="") return;
+
 	var current=$('#'+slot).data("current");
-	if(current===pid) return; //the module is already in the slot
+//	if(current===pid) return; //the module is already in the slot
 	if(current!==undefined) $vm.push_back_to_park({div:current});
 
 	$vm.push_to_slot({div:pid,slot:slot});
