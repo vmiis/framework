@@ -163,13 +163,16 @@ $vm.insert_module=function(options){
 
 	//****
 	var last_state=$('#'+slot).data('current_state');
-	if(last_state!=undefined){
-		var last_ID=last_state.ID;
-		$('#D'+last_ID).css('display','none');
-	}
 	var new_state={ID:pid,slot:slot};
 	window.history.pushState(new_state, null, null);
 	$('#'+slot).data('current_state',new_state);
+
+	if(last_state!=undefined){
+		if(last_state.ID!=new_state.ID){
+			var last_ID=last_state.ID;
+			$('#D'+last_ID).css('display','none');
+		}
+	}
 	//****
 };
 //------------------------------------
