@@ -22,7 +22,7 @@ $vm.nav_click_process=function(name,slot){
 	}
 }
 //-----------------------------------------
-$vm.nav_load_module=function(name,slot){
+$vm.nav_load_module=function(name,slot,config){
 	if($vm.app_config.modules[name]!=undefined && $vm.app_config.modules[name].url!=undefined){
 		if($vm.module_list[name]==undefined){
 			$vm.module_list[name]=$vm.app_config.modules[name];
@@ -38,10 +38,12 @@ $vm.nav_load_module=function(name,slot){
 	}
 	var single_record=$vm.module_list[name].single_record;
 	//if(check_trust(url)==0) return;
+	var c=$vm.app_config;
+	if(config!=undefined) c=config;
 	var op={
 		//-----------------
 		sys:{
-			config:$vm.app_config,
+			config:c,
 			UID:name,
 		},
 		//-----------------

@@ -164,6 +164,7 @@ $vm.insert_module=function(options){
 	//****
 	var last_state=$('#'+slot).data('current_state');
 	var new_state={ID:pid,slot:slot};
+	
 	window.history.pushState(new_state, null, null);
 	$('#'+slot).data('current_state',new_state);
 
@@ -173,6 +174,11 @@ $vm.insert_module=function(options){
 			$('#D'+last_ID).css('display','none');
 		}
 	}
+	
+	var last_ID=''; 
+	if(last_state!=undefined) last_ID=last_state.ID;
+	
+console.log('insert:'+pid+'   last:'+last_ID+" --- current:"+pid)
 	//****
 };
 //------------------------------------
@@ -181,15 +187,17 @@ window.onpopstate=function(event) {
 		window.history.back(-1);
 	}
 	else{
-		//alert(JSON.stringify(event.state));
 		var slot=$vm.root_layout_content_slot;
 		var current_ID=$('#'+slot).data("current_state").ID;
 		var last_ID=event.state.ID;
-
-		$('#D'+last_ID).css('display','block');
-		$('#D'+current_ID).css('display','none');
-
+		if(last_ID!=undefined){
+			$('#D'+last_ID).css('display','block');
+			if(current_ID!=last_ID){
+				$('#D'+current_ID).css('display','none');
+			}
+		}
 		$('#'+slot).data("current_state",event.state);
+console.log('popstate'+event.state.ID+'   last:'+current_ID+" --- current:"+event.state.ID)
 
 	}
 }
