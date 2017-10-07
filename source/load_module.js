@@ -153,7 +153,7 @@ $vm.insert_module=function(options){
 	if(slot===undefined || slot=="") return;
 
 	var current=$('#'+slot).data("current");
-//	if(current===pid) return; //the module is already in the slot
+    //	if(current===pid) return; //the module is already in the slot
 	if(current!==undefined) $vm.push_back_to_park({div:current});
 
 	$vm.push_to_slot({div:pid,slot:slot});
@@ -164,7 +164,7 @@ $vm.insert_module=function(options){
 	//****
 	var last_state=$('#'+slot).data('current_state');
 	var new_state={ID:pid,slot:slot};
-	
+
 	window.history.pushState(new_state, null, null);
 	$('#'+slot).data('current_state',new_state);
 
@@ -174,11 +174,11 @@ $vm.insert_module=function(options){
 			$('#D'+last_ID).css('display','none');
 		}
 	}
-	
-	var last_ID=''; 
+
+	var last_ID='';
 	if(last_state!=undefined) last_ID=last_state.ID;
-	
-console.log('insert:'+pid+'   last:'+last_ID+" --- current:"+pid)
+
+    console.log('insert:'+pid+'   last:'+last_ID+" --- current:"+pid)
 	//****
 };
 //------------------------------------
@@ -192,13 +192,14 @@ window.onpopstate=function(event) {
 		var last_ID=event.state.ID;
 		if(last_ID!=undefined){
 			$('#D'+last_ID).css('display','block');
+            $('#D'+last_ID).triggerHandler('show');
 			if(current_ID!=last_ID){
 				$('#D'+current_ID).css('display','none');
+                $('#D'+last_ID).triggerHandler('hide');
 			}
 		}
 		$('#'+slot).data("current_state",event.state);
-console.log('popstate'+event.state.ID+'   last:'+current_ID+" --- current:"+event.state.ID)
-
+        console.log('popstate'+event.state.ID+'   last:'+current_ID+" --- current:"+event.state.ID)
 	}
 }
 //------------------------------------
