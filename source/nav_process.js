@@ -40,6 +40,7 @@ $vm.nav_load_module=function(name,slot,config){
 	//if(check_trust(url)==0) return;
 	var c=$vm.app_config;
 	if(config!=undefined) c=config;
+	else if($vm.module_list[name].config!=undefined) c=$vm.module_list[name].config;
 	var op={
 		//-----------------
 		sys:{
