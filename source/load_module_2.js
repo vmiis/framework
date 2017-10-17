@@ -105,7 +105,7 @@ $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
 		//$("#vm_park").append($(content));
 		if(slot=='' || slot==undefined) slot=$vm.root_layout_content_slot;
 		$("#"+slot).append($(content));
-		$("#D"+pid).css("min-height",$vm.min_height);
+		//$("#D"+pid).css("min-height",$vm.min_height);
 	}
 	else{
 		$("body").append($(content));
