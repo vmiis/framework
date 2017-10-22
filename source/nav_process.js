@@ -23,10 +23,14 @@ $vm.nav_click_process=function(name,slot){
 }
 //-----------------------------------------
 $vm.nav_load_module=function(name,slot,config){
-	if($vm.app_config.modules[name]!=undefined && $vm.app_config.modules[name].url!=undefined){
+	if($vm.app_config.modules!=undefined && $vm.app_config.modules[name]!=undefined && $vm.app_config.modules[name].url!=undefined){
 		if($vm.module_list[name]==undefined){
 			$vm.module_list[name]=$vm.app_config.modules[name];
 		}
+	}
+	if($vm.module_list[name]==undefined){
+		alert(name+" is not in the module list.");
+		return;
 	}
 	var url=$vm.module_list[name].url;
 	if(url.split('.').pop().split('?')[0]=='json'){
