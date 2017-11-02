@@ -92,3 +92,18 @@ $vm.nav_load_panel=function(name){
 	});
 }
 //---------------------------------------------
+$vm.nav_wappsystem_signin=function(){
+	if($vm.user=='guest'){
+		window.open($VmAPI.api_base+"signin.html?url="+window.location.href,"Sign In","width=600, height=600");
+	}
+}
+//---------------------------------------------
+$vm.nav_signout=function(){
+	$VmAPI.clear_token();
+	$VmAPI.request({data:{cmd:'signout'},callback:function(c){
+		$vm.user="guest";
+		$vm.user_id="";
+		location.reload(true);
+	}});
+}
+//---------------------------------------------
