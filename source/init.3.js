@@ -10,6 +10,7 @@ $vm.init_v3=function(options){
 			$vm.user=res.user;
 			$vm.user_id=res.user_id;
 			$vm.user_ip=res.user_ip;
+			$vm.user_puid=res.user_puid;
 		}
 		if(callback!==undefined) callback(res);
 
