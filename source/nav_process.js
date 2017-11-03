@@ -99,10 +99,15 @@ $vm.nav_wappsystem_signin=function(){
 }
 //---------------------------------------------
 $vm.nav_signout=function(){
+	if($vm.user_puid=="1"){
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut();
+	}
+	else if($vm.user_puid=="2"){
+		FB.logout(function(response){});
+	}
 	$VmAPI.clear_token();
 	$VmAPI.request({data:{cmd:'signout'},callback:function(c){
-		$vm.user="guest";
-		$vm.user_id="";
 		location.reload(true);
 	}});
 }
