@@ -93,6 +93,9 @@ $vm.replace_and_recreate_content=function(lines,I,replace){
 $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
 	txt=$vm.url(txt);
 	var content=txt.replace(/__ID__/g, pid);
+    if(m_name!=undefined && $vm.module_list[m_name]!=undefined && $vm.module_list[m_name].html_filter!=undefined){
+        content=$vm.module_list[m_name].html_filter(content);
+    }
 
 	var temp=$('<div />').html("<div id=_temp_temp_>"+content+"</div>")
 	content=$('#_temp_temp_', temp).html();

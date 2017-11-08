@@ -7,6 +7,9 @@ $vm.source=function(pid,event){
 			$.get(module_url+'?'+new Date().getTime(), function(data){
 				var nm=$vm.vm[pid].name;
 				if($vm.module_list[nm]!==undefined){
+                    if($vm.module_list[nm].html_filter!=undefined){
+                        data=$vm.module_list[nm].html_filter(data);
+                    }
 					var msg;
 					if(Array.isArray($vm.module_list[nm])===true){
 						msg='module name: '+nm+', database table id: '+$vm.module_list[nm][0]+', path: '+$vm.module_list[nm][1];
@@ -69,7 +72,7 @@ $vm.source=function(pid,event){
 //------------------------------------------------------------------
 $vm.url_source=function(url){
 	$.get(url+'?'+new Date().getTime(), function(data){
-		var c_url='__PARTS__/code_viewer/code.html'
+		var c_url='__COMPONENT__/code_viewer/code.html'
 		var param={
 			name:"code_viewer",
 			pid:$vm.id(url+"--------"),
@@ -79,5 +82,16 @@ $vm.url_source=function(url){
 		}
 		$vm.load_module(param);
 	})
+}
+$vm.view_code=function(code){
+	var c_url='__COMPONENT__/code_viewer/code.html'
+	var param={
+		name:"code_viewer",
+		pid:$vm.id("--------"),
+		slot:$vm.root_layout_content_slot,
+        url:$vm.url(c_url),
+		op:{name:'Code',code:code}
+	}
+    $vm.load_module(param);
 }
 //------------------------------------------------------------------
