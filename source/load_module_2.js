@@ -93,8 +93,9 @@ $vm.replace_and_recreate_content=function(lines,I,replace){
 $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
 	var content=txt;
 	if(m_name!=undefined && $vm.module_list[m_name]!=undefined){
-		if($vm.module_list[m_name].module_only=='1'){
-			content=$(content).filter('#D__ID').html();
+		if($vm.module_list[m_name].full_content!=='1'){
+			var c_m=$(content).filter('#D__ID').html();
+			if(c_m!=undefined && c_m!='') content=c_m;
 		}
 	}
 	content=$vm.url(content);
