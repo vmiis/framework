@@ -91,34 +91,26 @@ $vm.replace_and_recreate_content=function(lines,I,replace){
 }
 //-----------------------------------
 $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
-	txt=$vm.url(txt);
-	var content=txt.replace(/__ID__/g, pid);
-    if(m_name!=undefined && $vm.module_list[m_name]!=undefined && $vm.module_list[m_name].html_filter!=undefined){
-        content=$vm.module_list[m_name].html_filter(content);
-    }
-
-	var temp=$('<div />').html("<div id=_temp_temp_>"+content+"</div>")
-	content=$('#_temp_temp_', temp).html();
-
-	var mh=$('#D__ID', temp).html();
-	if(mh!=undefined && mh!=''){
-		$('#D__ID', temp).remove();
-		content=mh+$('#_temp_temp_', temp).html();
+	var content=txt;
+	if(m_name!=undefined && $vm.module_list[m_name]!=undefined){
+		if($vm.module_list[m_name].module_only=='1'){
+			content=$(content).filter('#D__ID').html();
+		}
 	}
-
+	content=$vm.url(content);
+    if(m_name!=undefined && $vm.module_list[m_name]!=undefined){
+		if($vm.module_list[m_name].html_filter!=undefined){
+        	content=$vm.module_list[m_name].html_filter(content);
+		}
+    }
 	content=content.replace(/__ID/g, pid);
-	//content=content.replace(/__BASE__/g, $vm.hosting_path);
-	//content=content.replace(/__VER__/g, $vm.version);
-	//-----------------
 	content=content.replace(/<!--([\s\S]*?)-->/mig, '');
 	//-----------------
 	if(slot!='body'){
 		content="<div id=D"+pid+" module='"+m_name+"' class=vm_module style='display:none'><!--"+url+"-->"+content+"</div>"
 		$("#D"+pid).remove();
-		//$("#vm_park").append($(content));
 		if(slot=='' || slot==undefined) slot=$vm.root_layout_content_slot;
 		$("#"+slot).append($(content));
-		//$("#D"+pid).css("min-height",$vm.min_height);
 	}
 	else{
 		$("body").append($(content));
