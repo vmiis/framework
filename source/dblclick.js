@@ -1,7 +1,7 @@
 $vm.source=function(pid,event){
 	if (event.altKey) {
 		if($vm.vm[pid].url!==undefined){
-			var url='__BASE__/vmiis/Common-Code/code_viewer/code.html'
+			var url='__COMPONENT__/code_viewer/code.html'
 			var module_url=$vm.vm[pid].url;
 			if(module_url[0]=='/') module_url=$vm.hosting_path+module_url;
 			$.get(module_url+'?'+new Date().getTime(), function(data){
@@ -35,7 +35,7 @@ $vm.source=function(pid,event){
 			//txt=$('<div/>').html(txt).text();
 			var txt2=JSON.stringify($vm.module_list,null,4);
 			txt2=$('<div/>').html(txt2).text();
-			var url='__LIB__/vmiis/Common-Code/code_viewer/code.html'
+			var url='__COMPONENT__/code_viewer/code.html'
 			var param={
 				name:"code_viewer",
 				pid:$vm.id(url+"--------"),
