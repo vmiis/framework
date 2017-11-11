@@ -81,7 +81,7 @@ $vm.url_source=function(url){
 			op:{name:url,code:data}
 		}
 		$vm.load_module(param);
-	})
+    },'text');
 }
 $vm.view_code=function(code){
 	var c_url='__COMPONENT__/code_viewer/code.html'
