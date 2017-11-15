@@ -91,6 +91,7 @@ $vm.replace_and_recreate_content=function(lines,I,replace){
 }
 //-----------------------------------
 $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
+	txt=txt.replace(/__CURRENT_PATH__/g,_g_current_path);
 	var content=txt;
 	if(m_name!=undefined && $vm.module_list[m_name]!=undefined){
 		if($vm.module_list[m_name].full_content!=='1'){
