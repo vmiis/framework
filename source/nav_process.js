@@ -57,7 +57,7 @@ $vm.nav_load_module=function(name,slot,config){
 	}
 	var slot_1=$vm.root_layout_content_slot;
 	if(slot!=undefined && slot!="") slot_1=slot;
-	if(single_record=='1') slot_1=undefined;
+	if(single_record=='1' || slot=="hidden") slot_1=undefined;
 	$vm.load_module_by_name(name,slot_1,op)
 };
 //---------------------------------------------
