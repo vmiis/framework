@@ -280,6 +280,7 @@ $vm.td_upload_file_for_add=function(input,td_callback,options){
 			var a_data={}; a_data[filename_field]=filename;
 			var a_dbv={};
 			var req={cmd:"modify_record",rid:rid,db_pid:db_pid,data:a_data,dbv:a_dbv};
+			if(options.json==1) req={cmd:"modify_json_record",rid:rid,db_pid:db_pid.toString(),data:a_data,dbv:a_dbv};
 			$VmAPI.request({data:req,callback:function(res){
 				if(callback!==undefined){
 					td_callback(res,'add');
