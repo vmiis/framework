@@ -13,8 +13,16 @@ $vm.deserialize=function(record,form_id){
                 break;
             case 'file':
                 break;
-            default:
+            case 'text':
+            case 'textarea':
+            case 'select':
                 $el.val(value);
+                break;
+            case 'undefined':
+                break;
+            default:
+                break;
+
         }
     });
 }
@@ -25,4 +33,5 @@ $vm.serialize=function(form_id){
     $(form_id+" input:checkbox:not(:checked)").each(function(){
 		data[this.name]="off";
 	})
+    return data;
 }

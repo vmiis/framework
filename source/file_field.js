@@ -8,7 +8,8 @@ $vm.render_file_field=function($div,record,field){
     $div.find('u').on('click',function(){
         var rid=record.ID;
         if(rid!==undefined){
-            $vm.open_link({rid:rid,filename:filename});
+            if(record!=undefined) filename=record[field]; if(filename==undefined) filename=""
+            if(filename!="") $vm.open_link({rid:rid,filename:filename});
         }
         else alert("No file was found on server.")
     });
@@ -59,12 +60,15 @@ $vm.upload_form_files=function(rid,$form,upload_files_callback){
 }
 //--------------------------------------------------------
 $vm.set_file_name_as_upload_unsuccessful=function(data,$form){
+    var N=0
     $form.find('input[type=file]').each(function(evt){
         if(this.files.length===1){
             var field=$(this).attr('name');
             data[field]="upload unsuccessful";
+            N++;
         }
     });
+    return N;
 }
 //--------------------------------------------------------
 $vm.get_original_file_name=function($form){
