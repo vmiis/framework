@@ -1,29 +1,37 @@
+//--------------------------------------------------------
 $vm.deserialize=function(record,form_id){
     if(record==undefined) return;
     $.each(record, function(name, value){
-        var $el = $(form_id+' *[name='+name+']');
-        var type = $el.attr('type');
-        switch(type){
-            case 'checkbox':
-                if(value=='off' || value=='0' || value=='') $el.attr('checked', false);
-                else $el.attr('checked', true);
-                break;
-            case 'radio':
-                if($el.attr('value')==value) $el.prop('checked', true);
-                break;
-            case 'file':
-                break;
-            case 'text':
-            case 'textarea':
-            case 'select':
-                $el.val(value);
-                break;
-            case 'undefined':
-                break;
-            default:
-                break;
+        var $els = $(form_id+' *[name='+name+']');
+        $els.each(function(){
+            var $el=$(this);
+            var type = $el.attr('type');
+            switch(type){
+                case 'checkbox':
+                    if(value=='off' || value=='0' || value=='') $el.attr('checked', false);
+                    else $el.attr('checked', true);
+                    break;
+                case 'radio':
+                    if($el.attr('value')==value){
+                         $el.prop('checked', true);
+                    }
+                    break;
+                case 'file':
+                    break;
+                case 'text':
+                case 'email':
+                case 'textarea':
+                case 'select':
+                    $el.val(value);
+                    break;
+                case 'undefined':
+                    break;
+                default:
+                    $el.val(value);
+                    break;
 
-        }
+            }
+        });
     });
 }
 $vm.serialize=function(form_id){
