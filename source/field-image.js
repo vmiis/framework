@@ -1,4 +1,4 @@
-$vm.render_image_field=function(mID,$div,record){
+$vm.render_image_field=function(record,mID,$div){
     //------------------------------------------
     var _set_image_url=function($obj,rid,filename,modified){
         if(rid===undefined) return;
@@ -47,11 +47,11 @@ $vm.render_image_field=function(mID,$div,record){
         }
     }
     //-------------------------------------
-    //var mID="_"+$div.attr('id').split('_').pop()
+    if(record===undefined) record={};
     var field=$div.attr('data-id');
     var filename=""; if(record!=undefined) filename=record[field]; if(filename==undefined) filename=""
     var html="<span></span><img  width='80' style='display:inline-block;cursor:pointer;margin-bottom:0' />"
-    html+="<span class=file_button"+mID+"> <a title='Choose a file' class=choose_file"+mID+">&#9783;</a></span>";
+    html+="<span class=file_button"+mID+"> <a title='Choose a file' class=choose_file"+mID+"><i class='fa fa-file'></i></a></span>";
     html+="<input type=file name="+field+" style='display:none'></input>";
     $div.html(html);
     if(record!=undefined){

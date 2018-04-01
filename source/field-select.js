@@ -1,7 +1,8 @@
-$vm.render_dropdown_list_field=function(mID,$div,record,list){
+$vm.render_select_field=function(record,mID,$div,html){
+    if(record===undefined) record={};
     var field=$div.attr('data-id');
     record.vm_custom[field]=true;
-    $div.html(list)
+    $div.html(html)
     $div.find('select').val(record[field])
     $div.find('select').on('change', function(){
         var value=$(this).val();
