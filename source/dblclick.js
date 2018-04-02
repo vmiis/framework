@@ -30,36 +30,44 @@ $vm.source=function(pid,event){
 		}
     }
 	else if (event.ctrlKey) {
-		//if(_sys !=undefined && _sys.config!=undefined){
-			//var txt=JSON.stringify(config,null,4);
-			//txt=$('<div/>').html(txt).text();
-			var txt2=JSON.stringify($vm.module_list,null,4);
-			txt2=$('<div/>').html(txt2).text();
-			var url='__COMPONENT__/code_viewer/code.html'
-			var param={
-				name:"code_viewer",
-				pid:$vm.id(url+"--------"),
-				slot:$vm.root_layout_content_slot,
-				url:$vm.url(url),
-				//op:{name:'System info',code:'{"config":'+txt+',\r\n"module_list":'+txt2+'}'}
-				op:{name:'System info',code:txt2}
-			}
-			$vm.load_module(param);
-		//}
-		/*
-            if($vm.vm_module_border===undefined){
-                  $('div.vm_module').css("border","1px solid red");
-                  $vm.vm_module_border=1;
-            }
-            else{
-                  $('div.vm_module').css("border","0px solid red");
-                  $vm.vm_module_border=undefined;
-            }
-			*/
+        var nm=$vm.vm[pid].name+"_";
+        var list={}
+        for(key in $vm.module_list){
+          if(key.indexOf(nm)!==-1){
+              list[key]=$vm.module_list[key];
+          }
+        }
+		var txt2=JSON.stringify(list,null,4);
+		txt2=$('<div/>').html(txt2).text();
+		var url='__COMPONENT__/code_viewer/code.html'
+		var param={
+			name:"code_viewer",
+			pid:$vm.id(url+"--------"),
+			slot:$vm.root_layout_content_slot,
+			url:$vm.url(url),
+			op:{name:'System info',code:txt2}
+		}
+		$vm.load_module(param);
     }
 	else if(event.shiftKey){
 		var nm=$vm.vm[pid].name;
-		var msg;
+        var list={}
+        list[nm]=$vm.module_list[nm];
+        var txt2=JSON.stringify(list,null,4);
+		txt2=$('<div/>').html(txt2).text();
+		var url='__COMPONENT__/code_viewer/code.html'
+		var param={
+			name:"code_viewer",
+			pid:$vm.id(url+"--------"),
+			slot:$vm.root_layout_content_slot,
+			url:$vm.url(url),
+			op:{name:'System info',code:txt2}
+		}
+		$vm.load_module(param);
+        
+
+        /*
+        var msg;
 		if(Array.isArray($vm.module_list[nm])===true){
 		  msg='module name: '+nm+'\r\ndatabase table id: '+$vm.module_list[nm][0]+'\r\npath: '+$vm.module_list[nm][1]
 		}
@@ -67,6 +75,7 @@ $vm.source=function(pid,event){
 		  msg='module name: '+nm+'\r\ndatabase table id: '+$vm.module_list[nm]['table_id']+'\r\npath: '+$vm.module_list[nm]['url']
 		}
 		alert(msg)
+        */
 	}
 }
 //------------------------------------------------------------------

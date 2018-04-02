@@ -159,3 +159,15 @@ $vm.text=function(txt){
 	return $('<div/>').html(txt).text();
 }
 //--------------------------------------------------------
+$vm.status_of_data=function(data){
+    var N1=0,N2=0;
+    for(key in data){
+        N2++;
+        if(data[key]=='') N1++;
+    }
+    var status="#FFCC00";
+    if(N1==N2) 		    status='#FF0000';
+    else if(N1==0)  	status='#00FF00';
+    return status;
+}
+//--------------------------------------------------------
