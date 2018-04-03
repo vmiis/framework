@@ -184,24 +184,8 @@ $vm.load_module=function(options){
 	};
 	//------------------------------
 	if($('#D'+pid).length==0){
-		/*
-		var new_url=url+'?v_='+($vm.version+$vm.reload).replace(/\./,'');
-		if(url.indexOf('?')!==-1) new_url=url+'&v_='+($vm.version+$vm.reload).replace(/\./,'');
-		console.log('LOAD MODULE '+new_url.split('/').pop())
-		$.get(new_url, function(data){
-			var current_all=data;
-			if(current_all.indexOf('VmInclude:')==-1){
-				$vm.create_module_and_run_code(current_all,pid,url,slot,m_name);
-				$vm.insert_and_trigger_load(pid,slot,callback);
-			}
-			else{
-				$vm.process_first_include(current_all,pid,slot,callback,url,m_name);
-			}
-		}).fail(function() {
-			alert( "The file '"+url+"' doesn't exist!" );
-		});
-		*/
 		//------------------------------
+		/*
 		if(url.indexOf('127.0.0.1')==-1 && url.indexOf('localhost')==-1){
 			if($vm.trust_path!=undefined){
 				var trust=0;
@@ -218,6 +202,7 @@ $vm.load_module=function(options){
 				}
 			}
 		}
+		*/
 		//------------------------------
 		var ver=localStorage.getItem(url+"_ver");
 		var txt=localStorage.getItem(url+"_txt");
@@ -230,6 +215,13 @@ $vm.load_module=function(options){
 			console.log('loading '+new_url)
 			$('#vm_loader').show();
 			$.get(new_url, function(data){
+				//-----------------------------------
+				//for images belong to this module
+				if(data.indexOf('__CURRENT_NAME__')!=-1){
+					var nm=new_url.split('/').pop().split('?')[0];
+					data=data.replace(/__CURRENT_NAME__/g,nm);
+				}
+				//-----------------------------------
 				localStorage.setItem(url+"_txt",data);
 				localStorage.setItem(url+"_ver",$vm.version);
 				var current_all=data;
