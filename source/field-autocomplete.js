@@ -1,6 +1,7 @@
 $vm.autocomplete=function($div,sql,callback){
     var field=$div.attr('data-id');
-    $div.autocomplete({
+    $div.focus(function(){$div.autocomplete("search","");});
+    return $div.autocomplete({
         minLength:0,
         source:function(request,response){
             $VmAPI.request({data:{cmd:'auto',s1:request.term,sql:sql,minLength:0},callback:function(res){
@@ -20,5 +21,4 @@ $vm.autocomplete=function($div,sql,callback){
             }
         }
     })
-    $div.focus(function(){$div.autocomplete("search","");});
 }
