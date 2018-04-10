@@ -64,7 +64,7 @@ $vm.source=function(pid,event){
 			op:{name:'System info',code:txt2}
 		}
 		$vm.load_module(param);
-        
+
 
         /*
         var msg;
@@ -92,14 +92,15 @@ $vm.url_source=function(url){
 		$vm.load_module(param);
     },'text');
 }
-$vm.view_code=function(code){
+$vm.view_code=function(code,name){
+	if(name==undefined) name='Code'
 	var c_url='__COMPONENT__/code_viewer/code.html'
 	var param={
 		name:"code_viewer",
 		pid:$vm.id("--------"),
 		slot:$vm.root_layout_content_slot,
         url:$vm.url(c_url),
-		op:{name:'Code',code:code}
+		op:{name:name,code:code}
 	}
     $vm.load_module(param);
 }
