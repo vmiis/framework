@@ -96,7 +96,7 @@ $vm.nav_load_panel=function(name){
 //---------------------------------------------
 $vm.nav_wappsystem_signin=function(){
 	if($vm.user=='guest'){
-		window.open($VmAPI.api_base+"signin.html?url="+window.location.href,"Sign In","width=600, height=600");
+		window.open($VmAPI.api_base+"signin.html?url="+window.location.href,"Sign In","width=600, height=700");
 	}
 }
 //---------------------------------------------
