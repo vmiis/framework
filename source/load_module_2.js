@@ -213,7 +213,7 @@ $vm.load_module=function(options){
 			if(url.indexOf('?')!==-1) new_url=url+'&_v='+($vm.version+$vm.reload).replace(/\./,'');
 			//console.log('LOAD MODULE '+new_url.split('/').pop())
 			console.log('loading '+new_url)
-			$('#vm_loader').show();
+            if(window.location.hostname!='127.0.0.1' && window.location.hostname!='localhost')	$('#vm_loader').show();
 			$.get(new_url, function(data){
 				//-----------------------------------
 				//for images belong to this module
