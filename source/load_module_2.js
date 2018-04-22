@@ -15,7 +15,8 @@ $vm.load_include=function(lines,i,pid,slot,callback,url_0,m_name){
 	var items=name.split('|');
 	var url=$vm.url(items[0]);
 	if(url[0]=='/') url=$vm.hosting_path+url;
-	url=url.replace('__CURRENT_PATH__',_g_current_path);
+	//url=url.replace('__CURRENT_PATH__',_g_current_path);
+	url=url.replace('__CURRENT_PATH__',$vm.vm[pid].current_path);
 	//------------------------------
 	if(url.indexOf('127.0.0.1')==-1 && url.indexOf('localhost')==-1){
 		if($vm.trust_path!=undefined){
@@ -91,7 +92,8 @@ $vm.replace_and_recreate_content=function(lines,I,replace){
 }
 //-----------------------------------
 $vm.create_module_and_run_code=function(txt,pid,url,slot,m_name){
-	txt=txt.replace(/__CURRENT_PATH__/g,_g_current_path);
+	//txt=txt.replace(/__CURRENT_PATH__/g,_g_current_path);
+	txt=txt.replace(/__CURRENT_PATH__/g,$vm.vm[pid].current_path);
 	var content=txt;
 	if(m_name!=undefined && $vm.module_list[m_name]!=undefined){
 		if($vm.module_list[m_name].full_content!=='1'){
@@ -179,6 +181,7 @@ $vm.load_module=function(options){
 	$vm.vm[pid].parent_uid=undefined;
 	$vm.vm[pid].parent_name="";
 	$vm.vm[pid].excel_dialog="";
+	$vm.vm[pid].current_path=_g_current_path;
 	for (var a in options){
 		$vm.vm[pid][a]=options[a];
 	};
