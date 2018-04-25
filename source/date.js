@@ -68,3 +68,13 @@ $vm.date_today=function(){
   return new Date(d.getFullYear(),d.getMonth(),d.getDate(),0,0,0,0);
 }
 //----------------------------------------------------------------------------
+$vm.date_yyyymmdd_parse=function(a) {
+    try{
+        var b=a.split('-');
+        return new Date(b[0],b[1]-1,b[2]);
+    }
+    catch(e){
+        return new Date(1800,0,1);
+    }
+}
+//----------------------------------------------------------------------------
