@@ -185,6 +185,7 @@ $vm.load_module=function(options){
 	for (var a in options){
 		$vm.vm[pid][a]=options[a];
 	};
+    $vm.vm[pid].input=options.op;
 	//------------------------------
 	if($('#D'+pid).length==0){
 		//------------------------------
