@@ -62,10 +62,10 @@ $vm.nav_load_module=function(name,slot,config){
 };
 //---------------------------------------------
 $vm.load_module_v2=function(name,slot,op){
-    var single_record=$vm.module_list[name].single_record;
+    if(op==undefined) op={};
 	var slot_1=$vm.root_layout_content_slot;
 	if(slot!=undefined && slot!="") slot_1=slot;
-	if(single_record=='1' || slot=="hidden") slot_1=undefined;
+	if(slot=="hidden") slot_1=undefined;
 	$vm.load_module_by_name(name,slot_1,op)
 };
 //---------------------------------------------
