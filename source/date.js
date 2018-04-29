@@ -78,3 +78,17 @@ $vm.date_yyyymmdd_parse=function(a) {
     }
 }
 //----------------------------------------------------------------------------
+$vm.au_date_to_string_yyyymmdd=function(d){
+    if(d==undefined) return "";
+    var items=d.split('/');
+    if(items.length==3 && items[2].length==4){
+      var nd=new Date(items[2],items[1]-1,items[0]);
+      return nd.getFullYear()+"-"+$vm.pad(nd.getMonth()+1,2)+"-"+$vm.pad(nd.getDate(),2);
+    }
+    else return d;
+}
+//----------------------------------------------------------------------------
+$vm.date_to_string_yyyymmdd=function(nd){
+    return nd.getFullYear()+"-"+$vm.pad(nd.getMonth()+1,2)+"-"+$vm.pad(nd.getDate(),2);
+}
+//----------------------------------------------------------------------------

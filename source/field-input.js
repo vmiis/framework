@@ -14,14 +14,3 @@ $vm.render_input_field=function(record,mID,$input,html){
         }
     });
 }
-$vm.au_date_to_string_yyyymmdd=function(d){
-    var items=d.split('/');
-    if(items.length==3 && items[2].length==4){
-      var nd=new Date(items[2],items[1]-1,items[0]);
-      return nd.getFullYear()+"-"+$vm.pad(nd.getMonth()+1,2)+"-"+$vm.pad(nd.getDate(),2);
-    }
-    else return d;
-}
-$vm.date_to_string_yyyymmdd=function(nd){
-    return nd.getFullYear()+"-"+$vm.pad(nd.getMonth()+1,2)+"-"+$vm.pad(nd.getDate(),2);
-}
