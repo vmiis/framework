@@ -147,11 +147,32 @@ $vm.old_good_load_module=function(options){
 	//------------------------------
 };
 $vm.insert_module=function(options){
+    if($vm.page_stack==undefined){
+        $vm.page_stack=[];
+        $vm.page_stack_index=0;
+    }
 	var pid		=options.pid;
 	var slot	=options.slot;
 	if(pid===undefined) return;
 	if(slot===undefined || slot=="") return;
 
+    //new =================================
+    var L=$vm.page_stack.length;
+    if(L!=0){
+        var top=$vm.page_stack[L-1];
+        if(top!=undefined && top.slot==slot){
+            $('#D'+top.ID).css('display','none');
+        }
+    }
+    $vm.push_to_slot({div:pid,slot:slot});
+    $vm.page_stack_index++;
+    $vm.page_stack.push({ID:pid,slot:slot,index:$vm.page_stack_index});
+    window.history.pushState({ID:pid,slot:slot,index:$vm.page_stack_index}, null, null);
+    console.log($vm.page_stack)
+    //=====================================
+    return;
+
+    //old =====================================
 	var current=$('#'+slot).data("current");
     //	if(current===pid) return; //the module is already in the slot
 	if(current!==undefined) $vm.push_back_to_park({div:current});
@@ -180,10 +201,45 @@ $vm.insert_module=function(options){
 
     console.log('insert:'+pid+'   last:'+last_ID+" --- current:"+pid)
 	//****
+    //=====================================
 };
 //------------------------------------
 window.onpopstate=function(event) {
-	if(event.state==null){
+    //new ==========================================
+    var W_index=event.state.index;
+    var V_index=0;
+    var L=$vm.page_stack.length;
+    if(L>1){
+        var previous=$vm.page_stack[L-2];
+        V_index=previous.index;
+    }
+    if(W_index==V_index){
+        //back
+        var top=$vm.page_stack.pop();
+        if(top!=undefined) $('#D'+top.ID).css('display','none');
+        if($vm.page_stack.length==0){
+            window.history.back(-1);
+        }
+        else{
+            var L=$vm.page_stack.length;
+            var top=$vm.page_stack[L-1];
+            $('#D'+top.ID).css('display','block');
+        }
+    }
+    else if(W_index>V_index){
+        //forword
+        var L=$vm.page_stack.length;
+        var top=$vm.page_stack[L-1];
+        $('#D'+top.ID).css('display','none');
+        $('#D'+event.state.ID).css('display','block');
+        $vm.page_stack.push(event.state);
+    }
+    console.log($vm.page_stack);
+    //new ==========================================
+    return;
+
+    //old ==========================================
+    if(event.state==null){
 		window.history.back(-1);
 	}
 	else{
@@ -201,6 +257,7 @@ window.onpopstate=function(event) {
 		$('#'+slot).data("current_state",event.state);
         console.log('popstate'+event.state.ID+'   last:'+current_ID+" --- current:"+event.state.ID)
 	}
+    //old ==========================================
 }
 //------------------------------------
 $vm.push_back_to_park=function(options){
