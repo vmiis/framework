@@ -162,9 +162,12 @@ $vm.insert_module=function(options){
         var top=$vm.page_stack[L-1];
         if(top!=undefined && top.slot==slot){
             $('#D'+top.ID).css('display','none');
+            $('#D'+top.ID).triggerHandler('hide');
         }
     }
-    $vm.push_to_slot({div:pid,slot:slot});
+    //$vm.push_to_slot({div:pid,slot:slot});
+	$('#D'+pid).css('display','block');
+	$('#D'+pid).triggerHandler('show');
     $vm.page_stack_index++;
     $vm.page_stack.push({ID:pid,slot:slot,index:$vm.page_stack_index});
     window.history.pushState({ID:pid,slot:slot,index:$vm.page_stack_index}, null, null);
