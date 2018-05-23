@@ -38,7 +38,7 @@ $vm.source=function(pid,event){
           }
         }
 		var txt2=JSON.stringify(list,null,4);
-		txt2=$('<div/>').html(txt2).text();
+		txt2=$('<div></div>').html(txt2).text();
 		var url='__COMPONENT__/code_viewer/code.html'
 		var param={
 			name:"code_viewer",
@@ -54,7 +54,7 @@ $vm.source=function(pid,event){
         var list={}
         list[nm]=$vm.module_list[nm];
         var txt2=JSON.stringify(list,null,4);
-		txt2=$('<div/>').html(txt2).text();
+		txt2=$('<div></div>').html(txt2).text();
 		var url='__COMPONENT__/code_viewer/code.html'
 		var param={
 			name:"code_viewer",

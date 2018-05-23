@@ -1,5 +1,5 @@
 $vm.set_dropdown_list_from_text=function($List,text){
-    var txt=$("<div />").html(text).text();
+    var txt=$("<div></div>").html(text).text();
     txt=txt.replace(/\r/g,'\n');
     txt=txt.replace(/\n\n/g,'\n');
     txt=txt.replace(/\n/g,',');
@@ -156,7 +156,7 @@ $vm.find_object=function(theObject, key, val){
 }
 //--------------------------------------------------------
 $vm.text=function(txt){
-	return $('<div/>').html(txt).text();
+	return $('<div></div>').html(txt).text();
 }
 //--------------------------------------------------------
 $vm.status_of_data=function(data){

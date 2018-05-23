@@ -213,7 +213,7 @@ $vm.load_config_and_init=function(path,callback){
 }
 //--------------------------------------------------------
 $vm._panel_init=function(txt,callback){
-	var text=$('<div/>').html(txt).text();
+	var text=$('<div></div>').html(txt).text();
 	//---------------------------
 	var config;
 	try{ config=JSON.parse(text);}

@@ -77,7 +77,7 @@ $vm.nav_load_panel=function(name){
 	//if(check_trust(url)==0) return;
 	console.log('loading '+url);
 	$.get(url,function(text){
-		var text=$('<div/>').html(text).text();
+		var text=$('<div></div>').html(text).text();
 		//---------------------------
 		var config;
 		try{ config=JSON.parse(text); }
