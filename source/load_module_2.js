@@ -212,12 +212,15 @@ $vm.load_module=function(options){
 		var txt=localStorage.getItem(url+"_txt");
 		var parts_i=url.indexOf('https://vmiis.github.io/parts');
 		var modules_i=url.indexOf('https://vmiis.github.io/modules');
-        var http127_i=url.indexOf('http://127.0.0.1');
-		if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 && http127_i!=-1 || txt==null || $vm.reload!=''){
+        var http127_i=0;
+		if(url.indexOf('http://127.0.0.1')!=-1 || url.indexOf('http://localhost')!=-1) http127_i=1;
+		else if(url.indexOf('http://')==-1 && url.indexOf('https://')==-1) http127_i=1; //like modules/home.html
+		//if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 && http127_i!=-1 || txt==null || $vm.reload!=''){
+		if(ver!=$vm.version || http127_i==1 || txt==null || $vm.reload!=''){
 			var new_url=url+'?_v='+($vm.version+$vm.reload).replace(/\./,'');
 			if(url.indexOf('?')!==-1) new_url=url+'&_v='+($vm.version+$vm.reload).replace(/\./,'');
 			//console.log('LOAD MODULE '+new_url.split('/').pop())
-			console.log('loading '+new_url)
+			console.log('loading from url. '+new_url)
             if(window.location.hostname!='127.0.0.1' && window.location.hostname!='localhost')	$('#vm_loader').show();
 			$.get(new_url, function(data){
 				//-----------------------------------
@@ -242,6 +245,7 @@ $vm.load_module=function(options){
 			});
 		}
 		else{
+			console.log('loading from stotage. '+url)
 			var current_all=txt;
 			if(current_all.indexOf('VmInclude:')==-1){
 				$vm.create_module_and_run_code(current_all,pid,url,slot,m_name);
