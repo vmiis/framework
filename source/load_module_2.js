@@ -212,7 +212,8 @@ $vm.load_module=function(options){
 		var txt=localStorage.getItem(url+"_txt");
 		var parts_i=url.indexOf('https://vmiis.github.io/parts');
 		var modules_i=url.indexOf('https://vmiis.github.io/modules');
-		if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 || txt==null || $vm.reload!=''){
+        var http127_i=url.indexOf('http://127.0.0.1');
+		if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 && http127_i!=-1 || txt==null || $vm.reload!=''){
 			var new_url=url+'?_v='+($vm.version+$vm.reload).replace(/\./,'');
 			if(url.indexOf('?')!==-1) new_url=url+'&_v='+($vm.version+$vm.reload).replace(/\./,'');
 			//console.log('LOAD MODULE '+new_url.split('/').pop())
