@@ -18,34 +18,16 @@ $vm.load_include=function(lines,i,pid,slot,callback,url_0,m_name){
 	//url=url.replace('__CURRENT_PATH__',_g_current_path);
 	url=url.replace('__CURRENT_PATH__',$vm.vm[pid].current_path);
 	//------------------------------
-	if(url.indexOf('127.0.0.1')==-1 && url.indexOf('localhost')==-1){
-		if($vm.trust_path!=undefined){
-			var trust=0;
-			for(var k=0;k<$vm.trust_path.length;k++){
-				var len=$vm.trust_path[k].length;
-				if(url.indexOf($vm.trust_path[k])!==-1 && url.substring(0,len)==$vm.trust_path[k]){
-					trust=1;
-					break;
-				}
-			}
-			if(trust==0){
-				alert("The url ("+url+") is not trusted.")
-				return;
-			}
-		}
-	}
-	//------------------------------
 	var ver=localStorage.getItem(url+"_ver");
 	var txt=localStorage.getItem(url+"_txt");
-	var parts_i=url.indexOf('https://vmiis.github.io/parts');
-	var modules_i=url.indexOf('https://vmiis.github.io/modules');
-	if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 || txt==null || $vm.reload!=''){
-	//if(ver!=$vm.version || $vm.debug===true || txt==null || $vm.reload!=''){
+
+	var http127_i=0;
+	if(url.indexOf('http://127.0.0.1')!=-1 || url.indexOf('http://localhost')!=-1) http127_i=1;
+	else if($vm.localhost==true && url.indexOf('http://')==-1 && url.indexOf('https://')==-1) http127_i=1; //like modules/home.html
+	if(ver!=$vm.version || http127_i==1 || txt==null || $vm.reload!=''){
 		var new_url=url+'?_v='+($vm.version+$vm.reload).replace(/\./,'')+"&g="+_g_vm_chrom_loop++;
 		if(url.indexOf('?')!==-1) new_url=url+'&_v='+($vm.version+$vm.reload).replace(/\./,'')+"&g="+_g_vm_chrom_loop++;
-		//console.log('LOAD INCLUDE '+new_url.split('/').pop())
-		console.log('loading '+new_url)
-		//if(url.indexOf('field_select')!==-1) console.log("HHHHHH----"+new_url+"-------")
+		console.log('loading from url. '+new_url)
 		$.get(new_url, function(data){
 			if(items.length>1){
 				for(var kk=0;kk<(items.length-1)/2;kk++){
@@ -71,6 +53,7 @@ $vm.load_include=function(lines,i,pid,slot,callback,url_0,m_name){
 
 	}
 	else{
+		console.log('loading from stotage. '+url)
 		var current_all=$vm.replace_and_recreate_content(lines,i,txt)
 		if(current_all.indexOf('VmInclude:')==-1){
 			$vm.create_module_and_run_code(current_all,pid,url_0,slot,m_name);
@@ -189,37 +172,19 @@ $vm.load_module=function(options){
 	//------------------------------
 	if($('#D'+pid).length==0){
 		//------------------------------
-		/*
-		if(url.indexOf('127.0.0.1')==-1 && url.indexOf('localhost')==-1){
-			if($vm.trust_path!=undefined){
-				var trust=0;
-				for(var i=0;i<$vm.trust_path.length;i++){
-					var len=$vm.trust_path[i].length;
-					if(url.indexOf($vm.trust_path[i])!==-1 && url.substring(0,len)==$vm.trust_path[i]){
-						trust=1;
-						break;
-					}
-				}
-				if(trust==0){
-					alert("The url ("+url+") is not trusted.")
-					return;
-				}
-			}
-		}
-		*/
-		//------------------------------
 		var ver=localStorage.getItem(url+"_ver");
 		var txt=localStorage.getItem(url+"_txt");
-		var parts_i=url.indexOf('https://vmiis.github.io/parts');
-		var modules_i=url.indexOf('https://vmiis.github.io/modules');
         var http127_i=0;
 		if(url.indexOf('http://127.0.0.1')!=-1 || url.indexOf('http://localhost')!=-1) http127_i=1;
-		else if(url.indexOf('http://')==-1 && url.indexOf('https://')==-1) http127_i=1; //like modules/home.html
-		//if(ver!=$vm.version || $vm.debug===true && parts_i==-1 && modules_i==-1 && http127_i!=-1 || txt==null || $vm.reload!=''){
-		if(ver!=$vm.version || http127_i==1 || txt==null || $vm.reload!=''){
+		else if($vm.localhost==true && url.indexOf('http://')==-1 && url.indexOf('https://')==-1) http127_i=1; //like modules/home.html
+
+		var reload=0;
+		if(window.location.toString().indexOf('reload='+m_name)!=-1){
+			reload=1;
+		}
+		if(ver!=$vm.version || http127_i==1 || txt==null || $vm.reload!='' || reload==1){
 			var new_url=url+'?_v='+($vm.version+$vm.reload).replace(/\./,'');
 			if(url.indexOf('?')!==-1) new_url=url+'&_v='+($vm.version+$vm.reload).replace(/\./,'');
-			//console.log('LOAD MODULE '+new_url.split('/').pop())
 			console.log('loading from url. '+new_url)
             if(window.location.hostname!='127.0.0.1' && window.location.hostname!='localhost')	$('#vm_loader').show();
 			$.get(new_url, function(data){
