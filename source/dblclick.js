@@ -4,6 +4,11 @@ $vm.source=function(pid,event){
 			var url='__COMPONENT__/code_viewer/code.html'
 			var module_url=$vm.vm[pid].url;
 			if(module_url[0]=='/') module_url=$vm.hosting_path+module_url;
+			else{
+				if(module_url.substring(0,7)!='http://' && module_url.substring(0,8)!='https://'){
+					module_url=$vm.hosting_path+"/"+module_url;
+				}
+			}
 			$.get(module_url+'?'+new Date().getTime(), function(data){
 				var nm=$vm.vm[pid].name;
 				if($vm.module_list[nm]!==undefined){
@@ -15,8 +20,9 @@ $vm.source=function(pid,event){
 						msg='module name: '+nm+', database table id: '+$vm.module_list[nm][0]+', path: '+$vm.module_list[nm][1];
 					}
 					else{
-						msg='module name: '+nm+', database table id: '+$vm.module_list[nm]['table_id']+', path: '+$vm.url($vm.module_list[nm]['url']);
+						msg='module name: '+nm+', database table id: '+$vm.module_list[nm]['table_id'];//+', path: '+$vm.url($vm.module_list[nm]['url']);
 					}
+					/*
 					var param={
 			            name:"code_viewer",
 			            pid:$vm.id(url+"--------"),
@@ -25,6 +31,11 @@ $vm.source=function(pid,event){
 			            op:{name:msg,code:data}
 			        }
 			        $vm.load_module(param);
+					*/
+					if($vm.module_list["sys_code_viewer"]==undefined){
+						$vm.module_list["sys_code_viewer"]={url:url}
+					}
+					$vm.load_module_v2("sys_code_viewer",'',{code:data,msg:msg,url:module_url});
 				}
 			})
 		}
