@@ -171,6 +171,8 @@ $vm.load_module=function(options){
     $vm.vm[pid].input=options.op;
 	//------------------------------
 	if($('#D'+pid).length==0){
+        //------------------------------
+        if(url.indexOf('http://')==-1 && url.indexOf('https://')==-1) url=$vm.hosting_path+"/"+url;
 		//------------------------------
 		var ver=localStorage.getItem(url+"_ver");
 		var txt=localStorage.getItem(url+"_txt");
