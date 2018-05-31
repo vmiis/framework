@@ -41,6 +41,7 @@ $vm.source=function(pid,event){
 		}
     }
 	else if (event.ctrlKey) {
+		/*
         var nm=$vm.vm[pid].name+"_";
         var list={}
         for(key in $vm.module_list){
@@ -48,9 +49,11 @@ $vm.source=function(pid,event){
               list[key]=$vm.module_list[key];
           }
         }
-		var txt2=JSON.stringify(list,null,4);
+		*/
+		var txt2=JSON.stringify($vm.module_list,null,4);
 		txt2=$('<div></div>').html(txt2).text();
 		var url='__COMPONENT__/code_viewer/code.html'
+		/*
 		var param={
 			name:"code_viewer",
 			pid:$vm.id(url+"--------"),
@@ -59,6 +62,11 @@ $vm.source=function(pid,event){
 			op:{name:'System info',code:txt2}
 		}
 		$vm.load_module(param);
+		*/
+		if($vm.module_list["sys_code_viewer"]==undefined){
+			$vm.module_list["sys_code_viewer"]={url:url}
+		}
+		$vm.load_module_v2("sys_code_viewer",'',{code:txt2,msg:"modules",url:""});
     }
 	else if(event.shiftKey){
 		var nm=$vm.vm[pid].name;
