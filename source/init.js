@@ -99,6 +99,7 @@ $vm.init=function(options){
 		if(callback!==undefined) callback(res);
 		//------------------------------------------------------------------
 		$vm.ip='';
+		/*
 		try{
 			window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
 			var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
@@ -115,6 +116,7 @@ $vm.init=function(options){
 			$VmAPI.request({data:{cmd:'user_ip',ip:'0.0.0.0',name:$vm.user},callback:function(res){}})
 		}
 		//------------------------------------------------------------------
+		*/
 	}})
 	//-----------------------------------------------------
 };
